@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raise a Complaint – Welfare Schemes Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body {
+      background: #f5f8fc;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .main-header {
+      background: #1C4F9C;
+      color: #fff;
+      padding: 1rem 1.5rem;
+    }
+    .header-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .raise-btn {
+      background: #1C4F9C;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 8px;
+      font-size: 1.08rem;
+    }
+    .raise-btn:hover, .raise-btn:focus {
+      background: #003a81;
+      color: #fff;
+    }
+    .modal-header {
+      background: #1C4F9C;
+      color: #fff;
+      border-top-left-radius: 1rem !important;
+      border-top-right-radius: 1rem !important;
+    }
+    .dialog-icon {
+      font-size: 1.4rem;
+      margin-right: .75rem;
+    }
+    .modal-content {
+      border-radius: 1rem;
+    }
+    .form-icon {
+      font-size: 1.17rem;
+      opacity: 0.8;
+    }
+    .snackbar {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      z-index: 1090;
+      min-width: 220px;
+      padding: .9rem 1.25rem;
+      border-radius: .5rem;
+      background: #1a1a1a;
+      color: #fff;
+      font-weight: 500;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .snackbar.success { background: #28a745; }
+    .snackbar.warning { background: #e87200; }
+  </style>
+</head>
+<body>
+
+<div class="main-header d-flex align-items-center">
+  <i class="bi bi-flag-fill me-2"></i>
+  <span class="header-title">Raise a Complaint – Govt Schemes Portal</span>
+</div>
+
+<div class="container py-5">
+  <div class="text-center mb-4">
+    <button class="raise-btn px-4 py-2" onclick="showComplaintDialog()">
+      <i class="bi bi-exclamation-octagon me-2"></i> Raise a Complaint
+    </button>
+    <p class="text-muted mt-3" style="font-size:.99rem">
+      Your concerns matter to us. Please fill in your details – our team will reach out soon!
+    </p>
+  </div>
+</div>
+
+<!-- Complaint Modal Dialog -->
+<div class="modal fade" id="complaintModal" tabindex="-1" aria-labelledby="complaintModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <i class="bi bi-chat-square-quote-fill dialog-icon"></i>
+        <h5 class="modal-title" id="complaintModalLabel">Raise a Complaint</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form id="complaintForm">
+        <div class="modal-body pb-1">
+          <div class="mb-3">
+            <label for="email" class="form-label">Your Email</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light"><i class="bi bi-envelope form-icon"></i></span>
+              <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="complaintText" class="form-label">Complaint</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light align-items-start"><i class="bi bi-chat-text form-icon"></i></span>
+              <textarea class="form-control" id="complaintText" name="complaint" rows="4" placeholder="Describe your issue..." required></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer pt-2">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn raise-btn" id="submitBtn">
+            <span id="submitBtnText"><i class="bi bi-send me-2"></i>Submit</span>
+            <span id="loadingSpinner" class="d-none">
+              <span class="spinner-border spinner-border-sm" role="status"></span>
+            </span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<div class="snackbar" id="snackbar"></div>
+
+<!-- BOOTSTRAP -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- EMAILJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+
+<script>
+  // Initialize EmailJS with your Public Key
+  emailjs.init("McBZ-D3xzq3htWXtk"); // Replace with your actual public key if different
+
+  function showComplaintDialog() {
+    const modal = new bootstrap.Modal(document.getElementById('complaintModal'));
+    document.getElementById('complaintForm').reset();
+    hideLoading();
+    modal.show();
+  }
+
+  function showSnackbar(type, iconClass, message) {
+    const sb = document.getElementById('snackbar');
+    sb.className = `snackbar ${type}`;
+    sb.innerHTML = `<i class="bi ${iconClass} me-2"></i>${message}`;
+    sb.style.display = 'flex';
+    setTimeout(() => sb.style.display = 'none', 3000);
+  }
+
+  function showLoading() {
+    document.getElementById('submitBtnText').classList.add('d-none');
+    document.getElementById('loadingSpinner').classList.remove('d-none');
+  }
+
+  function hideLoading() {
+    document.getElementById('submitBtnText').classList.remove('d-none');
+    document.getElementById('loadingSpinner').classList.add('d-none');
+  }
+
+  // Handle form submission
+  document.getElementById('complaintForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const email = this.email.value.trim();
+    const complaint = this.complaint.value.trim();
+    if (!email || !complaint) {
+      showSnackbar('warning', 'bi-exclamation-diamond', 'Please fill in both fields.');
+      return;
+    }
+
+    showLoading();
+    console.log("Attempting to send email with:", { email, complaint });
+
+    try {
+      const result = await emailjs.send("service_o1b50eh", "template_ixn0wan", {
+        user_email: email,
+        user_complaint: complaint
+      });
+      console.log("Email sent successfully:", result);
+      hideLoading();
+      bootstrap.Modal.getInstance(document.getElementById('complaintModal')).hide();
+      showSnackbar('success', 'bi-check-circle', 'Complaint sent successfully!');
+    } catch (err) {
+      hideLoading();
+      console.error("Failed to send email:", err);
+      showSnackbar('warning', 'bi-x-circle', 'Failed to send complaint. Please try again later.');
+    }
+  };
+</script>
+</body>
+</html>

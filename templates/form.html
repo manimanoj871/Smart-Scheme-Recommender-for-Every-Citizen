@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="/static/assets/Government.png">
+  <title>Welfare Schemes Portal – Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --govt-primary: #1C4F9C;
+      --govt-secondary: #FF9933;
+      --govt-accent: #138808;
+      --govt-background: #F5F5F5;
+      --govt-divider: #DDDDDD;
+    }
+    body {
+      background: var(--govt-background);
+    }
+    .govt-header {
+      background: var(--govt-primary);
+      color: #fff;
+      padding: 1rem 1.5rem;
+    }
+    .header-emblem {
+      background: #fff;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 24px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 1rem;
+    }
+    .header-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 0;
+    }
+    .header-subtitle {
+      font-size: 0.98rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .govt-toolbar .btn {
+      color: #fff;
+    }
+    .form-card {
+      max-width: 650px;
+      margin: 2rem auto 0 auto;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(28,79,156,0.08);
+      background: #fff;
+      padding: 0;
+    }
+    .form-section-header {
+      background: rgba(28,79,156,0.05);
+      color: var(--govt-primary);
+      border-radius: 8px 8px 0 0;
+      font-weight: bold;
+      padding: .7rem 1.1rem;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--govt-divider);
+    }
+    .form-section-header .bi {
+      margin-right: 0.6rem;
+      font-size: 1.2rem;
+    }
+    .form-group {
+      margin-bottom: 1.3rem;
+    }
+    .form-divider {
+      border-top: 1px solid var(--govt-divider);
+      margin: 0;
+    }
+    .scheme-btn {
+      background: linear-gradient(90deg, var(--govt-primary) 70%, #2670d1 100%);
+      color: #fff;
+      border-radius: 8px;
+      border: none;
+      font-size: 1.12rem;
+      font-weight: 700;
+      height: 50px;
+      box-shadow: 0 2px 9px rgba(28,79,156,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.2s;
+    }
+    .scheme-btn:hover, .scheme-btn:focus {
+      background: linear-gradient(90deg, #2670d1 70%, var(--govt-primary) 100%);
+    }
+    .footer-bar {
+      background: var(--govt-primary);
+      color: #fff;
+      font-size: 13px;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: 2rem;
+    }
+    @media (max-width: 575px) {
+      .form-card { padding: 0; }
+      .govt-header { padding: 1rem 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header and toolbar -->
+<div class="govt-header d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center">
+    <div class="header-emblem" aria-label="India flag emoji" role="img">🇮🇳</div>
+    <div>
+      <div class="header-title">Government of India</div>
+      <div class="header-subtitle">Welfare Schemes Portal</div>
+    </div>
+  </div>
+  <div class="govt-toolbar d-flex align-items-center gap-2">
+    <button class="btn" title="Raise Complaint" onclick="window.location.href='/complaint'">
+  <i class="bi bi-exclamation-octagon"></i>
+</button>
+
+    <button class="btn" title="Show Help" onclick="showHelpDialog()">
+      <i class="bi bi-question-circle"></i>
+    </button>
+    <button class="btn" title="View Documents" onclick="showDocsNotice()">
+      <i class="bi bi-file-earmark-text"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Form instruction -->
+<div class="bg-white w-100 py-3 border-bottom">
+  <div class="container d-flex align-items-center">
+    <i class="bi bi-info-circle text-warning" style="font-size: 1.2rem;"></i>
+    <span class="ms-2 fw-medium">
+      Please provide your information to find eligible government schemes
+    </span>
+  </div>
+</div>
+<hr class="form-divider" />
+
+<!-- FORM CARD -->
+<div class="form-card card shadow-sm p-0 mb-5">
+  <form id="schemeForm" autocomplete="off">
+    <!-- Personal Details -->
+    <div>
+      <div class="form-section-header">
+        <i class="bi bi-person"></i> Personal Details
+      </div>
+      <div class="p-4 pt-3">
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" min="0" max="110" class="form-control" id="age" name="age" placeholder="Enter your age" required />
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select class="form-select" id="gender" name="gender" required>
+            <option value="">Select gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- Divider -->
+    <hr class="form-divider" />
+    <!-- Employment & Income -->
+    <div>
+      <div class="form-section-header" style="color: var(--govt-secondary); background: rgba(255,153,51,0.08); border-color: var(--govt-secondary);">
+        <i class="bi bi-briefcase"></i> Employment & Income
+      </div>
+      <div class="p-4 pt-3">
+        <div class="form-group">
+          <label for="occupation">Occupation</label>
+          <select class="form-select" id="occupation" name="occupation" required>
+            <option value="">Select occupation</option>
+            <option>Student</option>
+            <option>Farmer</option>
+            <option>Senior Citizen</option>
+            <option>Unemployed</option>
+            <option>Self-employed</option>
+            <option>Government Employee</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="income">Annual Income</label>
+          <select class="form-select" id="income" name="income" required>
+            <option value="">Select income range</option>
+            <option>&lt; 1 Lakh</option>
+            <option>1-5 Lakhs</option>
+            <option>5-10 Lakhs</option>
+            <option>&gt; 10 Lakhs</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <hr class="form-divider" />
+    <!-- Location -->
+    <div>
+      <div class="form-section-header" style="color: var(--govt-accent); background: rgba(19,136,8,0.11); border-color: var(--govt-accent);">
+        <i class="bi bi-geo-alt"></i> Location
+      </div>
+      <div class="p-4 pt-3">
+        <div class="form-group">
+          <label for="state">State</label>
+          <select class="form-select" id="state" name="state" required>
+            <option value="">Select state</option>
+            <option>Andhra Pradesh</option>
+            <option>Assam</option>
+            <option>Bihar</option>
+            <option>Delhi</option>
+            <option>Gujarat</option>
+            <option>Haryana</option>
+            <option>Karnataka</option>
+            <option>Kerala</option>
+            <option>Madhya Pradesh</option>
+            <option>Maharashtra</option>
+            <option>Punjab</option>
+            <option>Rajasthan</option>
+            <option>Tamil Nadu</option>
+            <option>Telangana</option>
+            <option>Uttar Pradesh</option>
+            <option>West Bengal</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="p-4 pt-0">
+      <button type="submit" class="scheme-btn w-100 mt-3">
+        <i class="bi bi-search"></i>
+        FIND ELIGIBLE SCHEMES
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Footer -->
+<div class="footer-bar">
+  © Ministry of Electronics &amp; IT, Government of India
+</div>
+
+<!-- Complaint Modal -->
+<div class="modal fade" id="complaintModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Raise Complaint</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <div class="modal-body">
+        <!-- <textarea class="form-control" placeholder="Describe your complaint here..." rows="4"></textarea> -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="submitComplaint()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Help Modal -->
+<div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Help</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <div class="modal-body">
+        <p>Fill in your age, gender, employment, and location to get scheme results tailored for you. Contact your local office for support in documentation and queries.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap 5 and Bootstrap Icons -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<script>
+
+function showHelpDialog() {
+  new bootstrap.Modal(document.getElementById('helpModal')).show();
+}
+function showDocsNotice() {
+  alert("Opening Documents...");
+  setTimeout(function() {
+    window.location.href = '/main';
+  }, 500);
+}
+
+
+function submitComplaint() {
+  alert('Your complaint submitted. Thank you!');
+  bootstrap.Modal.getInstance(document.getElementById('complaintModal')).hide();
+}
+
+document.getElementById('schemeForm').onsubmit = async function (e) {
+  e.preventDefault();
+
+  const form = this;
+  const age = form.age.value.trim();
+  const gender = form.gender.value.trim();
+  const occupation = form.occupation.value.trim();
+  const income = form.income.value.trim();
+  const state = form.state.value.trim();
+
+  if (!age || !gender || !occupation || !income || !state) {
+    alert('Please fill all the required fields.');
+    return;
+  }
+
+  // Optional: Validate ranges etc.
+
+  // Redirect to result page with form data as URL query
+  const query = new URLSearchParams({ age, gender, occupation, income, state }).toString();
+
+ window.location.href = '/result?' + query;
+
+};
+
+</script>
+
+</body>
+</html>

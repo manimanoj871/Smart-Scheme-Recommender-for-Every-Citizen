@@ -2,7 +2,8 @@
 
 > A citizen-centric web application to recommend suitable government schemes based on personal eligibility.
 
-![Smart Scheme Recommender](https://img.shields.io/badge/Smart--Scheme--Recommender-For-Everyone-brightgreen)
+![Smart Scheme Recommender](https://img.shields.io/badge/Smart%20Scheme%20Recommender-For%20Everyone-brightgreen)
+
 
 ---
 
@@ -87,8 +88,13 @@ Smart-Scheme-Recommender/
 ### 🗣 Translator Page
 ![Translator Page](static/assets/Translator%20Page.png)
 
+
 ---
 
 ### 🚨 Raise Complaint Page
 ![Raise Complaint Page](static/assets/Raise%20Complaint%20Page.png)
+
+
+> 🗨️ **“When access meets awareness, empowerment begins.  
+> This platform is not just a tool — it’s a bridge to opportunity.”**
 
